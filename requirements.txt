@@ -1,3 +1,5 @@
 numpy
 scikit-image
 imageio
+imageio-ffmpeg  # video output (allcolors.py)
+pillow

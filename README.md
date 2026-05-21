@@ -54,7 +54,6 @@ Python 3, in a virtual environment:
 
     python3 -m venv .venv
     .venv/bin/pip install -r requirements.txt
-    .venv/bin/pip install imageio-ffmpeg     # only needed for video output
 
 ## Notes
 
