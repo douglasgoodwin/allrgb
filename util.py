@@ -1,7 +1,7 @@
 import numpy as np
 from skimage.color import rgb2hsv
-from skimage.io import imread # skimage.io.imsave seems to be broken?
-from scipy.misc import imsave
+from skimage.io import imread
+from imageio import imwrite
 from tempfile import mkdtemp
 from os import path
 from shutil import rmtree
@@ -12,7 +12,7 @@ rgb_dtype = np.dtype([('R', float), ('G', float), ('B', float)])
 def np_product(*arrays, **kwargs):
   arrays = arrays * kwargs.pop('repeat', 1)
   num_arrays = len(arrays)
-  arr = np.empty(map(len, arrays) + [num_arrays], **kwargs)
+  arr = np.empty(list(map(len, arrays)) + [num_arrays], **kwargs)
   for index, array in enumerate(np.ix_(*arrays)):
     arr[..., index] = array
   return arr.reshape(-1, num_arrays)
@@ -31,12 +31,13 @@ def read_image(f):
   return imread(f)/256. # skimage is inconsistent with whether RGB is 0-1 or 0-255
 
 def write_image(f, image):
+  image = np.clip(np.rint(image * 256), 0, 255).astype(np.uint8)
   if hasattr(f, 'write'):
     tmpdirname = mkdtemp()
     tmpfilename = path.join(tmpdirname, 'tmpfile.png')
-    imsave(tmpfilename, image)
+    imwrite(tmpfilename, image)
     with open(tmpfilename, 'rb') as tmpfile:
       f.write(tmpfile.read())
     rmtree(tmpdirname)
   else:
-    imsave(f, image)
+    imwrite(f, image)

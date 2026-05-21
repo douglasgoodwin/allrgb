@@ -1,7 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from setuptools import setup
-from pip.req import parse_requirements
 
 setup(
   name='allrgb',
@@ -11,5 +10,5 @@ setup(
   author_email='min@dvir.us',
   url='http://github.com/dbkaplun/allrgb',
   scripts=['allrgb.py'],
-  install_requires=[str(req.req) for req in parse_requirements('requirements.txt')]
+  install_requires=['numpy', 'scikit-image', 'imageio']
 )

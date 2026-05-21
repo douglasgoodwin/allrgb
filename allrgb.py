@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import numpy as np
 from skimage.color import rgb2hsv, hsv2rgb
@@ -37,11 +37,11 @@ if __name__ == '__main__':
     choices=['generate', 'test'],
     default='generate')
   parser.add_argument('-i', '--input',
-    type=argparse.FileType('r'),
-    default=sys.stdin)
+    type=argparse.FileType('rb'),
+    default=sys.stdin.buffer)
   parser.add_argument('-o', '--output',
-    type=argparse.FileType('w'),
-    default=sys.stdout)
+    type=argparse.FileType('wb'),
+    default=sys.stdout.buffer)
 
   args = parser.parse_args()
   image = read_image(args.input)
